@@ -1,0 +1,12 @@
+*.class
+*/.metadata/
+/.metadata/
+/.settings/
+.settings
+.classpath
+*/target/
+target/
+*.project
+*.log
+*/.sonarlint/
+/.sonarlint/
