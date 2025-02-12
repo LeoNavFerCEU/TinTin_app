@@ -7,7 +7,7 @@ public class User {
 	private Long id;
 	private String username;
 	private String password;
-	private String tipoPerfil;
-	private Student perfilAsociado;
+	private String profileType;
+	private Student associatedProfile;
 	private Boolean active;
 }
