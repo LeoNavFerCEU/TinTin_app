@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import tintin.model.Dates;
 
 @Repository
-public interface DateRepository extends JpaRepository<Dates, Long>{
+public interface StudentRepository extends JpaRepository<Dates, Long>{
 
 }

@@ -1,4 +1,4 @@
-package tintin.model;
+package tintin.dto;
 
 import lombok.Data;
 
