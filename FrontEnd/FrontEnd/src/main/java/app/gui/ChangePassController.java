@@ -25,12 +25,13 @@ public class ChangePassController extends AppController{
 
     @FXML
     void cancel(ActionEvent event) {
-    	
+    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	mainPane.setCenter(loadScene(FXML_ABOUTYOU));
     }
 
     @FXML
     void changePass(ActionEvent event) {
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla principal");
+    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
     	mainPane.setCenter(loadScene(FXML_ABOUTYOU));
     }
 
