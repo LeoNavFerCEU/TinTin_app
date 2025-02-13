@@ -1,4 +1,4 @@
-package tintin.services;
+package tintin.services.exceptions;
 
 public class UserUnauthorizedException extends Exception {
 
