@@ -14,4 +14,5 @@ public class StudentDTO {
 	private Integer totalHours;
 	private Integer hoursWorked;
 	private Integer hoursLeft;
+	
 }
