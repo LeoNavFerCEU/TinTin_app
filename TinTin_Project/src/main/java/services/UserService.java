@@ -11,7 +11,7 @@ public interface UserService {
 	
 	public void changePassword(Long idUser, String oldPassword, String newPassword) throws UserNotFoundException, UserUnauthorizedException, UserEcxeption;
 	
-	
+	public User getUser(Long idUser) throws UserNotFoundException, UserEcxeption;
 	
 	
 }
