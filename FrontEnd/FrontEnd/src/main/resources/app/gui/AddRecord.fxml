@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.AddRecordController">
+   <children>
+      <Label layoutX="67.0" layoutY="65.0" text="REGISTRAR" />
+      <Button fx:id="btnCancel" layoutX="272.0" layoutY="462.0" mnemonicParsing="false" onAction="#cancel" text="CANCELAR" />
+      <Button fx:id="btnRegister" layoutX="647.0" layoutY="462.0" mnemonicParsing="false" onAction="#register" text="REGISTRAR" />
+   </children>
+</AnchorPane>
