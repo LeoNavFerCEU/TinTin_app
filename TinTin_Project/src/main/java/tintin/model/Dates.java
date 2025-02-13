@@ -1,4 +1,4 @@
-package model;
+package tintin.api.server.model;
 
 import java.time.LocalDate;
 

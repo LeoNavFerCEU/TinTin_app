@@ -1,9 +1,9 @@
-package services;
+package tintin.api.server.services;
 
-import model.User;
-import services.exceptions.NotActiveUserException;
-import services.exceptions.StudentNotFoundException;
-import services.exceptions.UserNotFoundException;
+import tintin.api.server.model.User;
+import tintin.api.server.services.exceptions.NotActiveUserException;
+import tintin.api.server.services.exceptions.StudentNotFoundException;
+import tintin.api.server.services.exceptions.UserNotFoundException;
 
 public interface UserService {
 	
@@ -11,7 +11,7 @@ public interface UserService {
 	
 	public void changePassword(Long idUser, String oldPassword, String newPassword) throws UserNotFoundException, UserUnauthorizedException, UserEcxeption;
 	
-	public User getUser(Long idUser) throws UserNotFoundException, UserEcxeption;
+	
 	
 	
 }

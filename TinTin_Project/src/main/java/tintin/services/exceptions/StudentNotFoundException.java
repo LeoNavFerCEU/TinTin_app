@@ -1,4 +1,4 @@
-package services.exceptions;
+package tintin.api.server.services.exceptions;
 
 public class StudentNotFoundException extends Exception {
 

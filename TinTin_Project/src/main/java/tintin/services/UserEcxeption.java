@@ -1,4 +1,4 @@
-package services;
+package tintin.api.server.services;
 
 public class UserEcxeption extends Exception {
 

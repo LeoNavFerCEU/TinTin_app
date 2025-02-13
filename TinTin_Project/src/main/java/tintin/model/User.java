@@ -1,4 +1,4 @@
-package model;
+package tintin.api.server.model;
 
 import lombok.Data;
 
@@ -10,5 +10,4 @@ public class User {
 	private String profileType;
 	private Student associatedProfile;
 	private Boolean active;
-	private Boolean logged;
 }
