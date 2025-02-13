@@ -1,6 +1,6 @@
-package services;
+package tintin.services;
 
-import model.FCTRegister;
+import tintin.model.FCTRegister;
 
 public interface FCTRegisterService {
 	

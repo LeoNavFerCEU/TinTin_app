@@ -1,9 +1,9 @@
-package tintin.api.server.services;
+package tintin.services;
 
-import tintin.api.server.model.User;
-import tintin.api.server.services.exceptions.NotActiveUserException;
-import tintin.api.server.services.exceptions.StudentNotFoundException;
-import tintin.api.server.services.exceptions.UserNotFoundException;
+import tintin.model.User;
+import tintin.services.exceptions.NotActiveUserException;
+import tintin.services.exceptions.StudentNotFoundException;
+import tintin.services.exceptions.UserNotFoundException;
 
 public interface UserService {
 	

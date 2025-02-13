@@ -1,9 +1,9 @@
-package tintin.api.server.repositories;
+package tintin.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tintin.api.server.model.User;
+import tintin.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
