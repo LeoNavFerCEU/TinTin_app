@@ -1,4 +1,4 @@
-package tintin.dev.user;
+package tintin.api;
 
 
 public class StudentDTO {
