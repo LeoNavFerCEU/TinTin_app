@@ -1,0 +1,25 @@
+.label {
+	-fx-text-fill: white;
+	-fx-font-size: 22px;
+	-fx-font-weight: bold;
+}
+
+#title {
+	-fx-text-fill: white;
+	-fx-font-size: 50px;
+	-fx-font-weight: bold;
+}
+
+.date-picker {
+	-fx-background-color: rgb(50, 50, 50);
+	-fx-background-radius: 18px;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
+.radio-button {
+	-fx-text-fill: white;
+	-fx-font-size: 13px;
+	-fx-font-weight: bold;
+}

@@ -34,7 +34,7 @@ public class MainController extends AppController{
     void cambiarVentana(ActionEvent event) {
         // Obtener el botón que disparó el evento
         Button botonPresionado = (Button) event.getSource();
-
+        addParam("Pantalla Principal", mainPane);
         // Determinar qué pantalla cargar según el botón
         String fxmlFile = "";
         if (botonPresionado == btnAboutYou) {
