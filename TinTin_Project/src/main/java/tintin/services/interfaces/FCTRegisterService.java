@@ -1,4 +1,4 @@
-package tintin.services;
+package tintin.services.interfaces;
 
 import java.util.List;
 
@@ -17,4 +17,6 @@ public interface FCTRegisterService {
 	public void deleteRegister(Long idRegister) throws RegisterNotFoundException;
 	
 	public FCTRegister createRegister(FCTRegister register) throws DuplicateRegisterException;
+	
+	public FCTRegister getRegisterByDate(Long date) throws RegisterNotFoundException;
 }

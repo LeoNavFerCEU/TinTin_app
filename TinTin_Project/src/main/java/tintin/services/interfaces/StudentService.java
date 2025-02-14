@@ -1,4 +1,4 @@
-package tintin.services;
+package tintin.services.interfaces;
 
 import tintin.model.FCTRegister;
 import tintin.model.Student;
