@@ -5,14 +5,21 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.LoginController">
    <children>
-      <Label layoutX="604.0" layoutY="88.0" text="TinTinTracker" />
-      <Label layoutX="570.0" layoutY="147.0" text="Gestiónate durante tu TFG" />
-      <Label layoutX="597.0" layoutY="276.0" text="INICIAR SESIÓN" />
-      <TextField fx:id="tfUser" layoutX="565.0" layoutY="348.0" />
-      <PasswordField fx:id="pfPass" layoutX="566.0" layoutY="429.0" />
-      <Button fx:id="btLogIn" layoutX="590.0" layoutY="521.0" mnemonicParsing="false" onAction="#LogIn" text="INICIAR SESIÓN" />
+      <Label layoutX="446.0" layoutY="59.0" text="TinTinTracker" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="60.0" />
+         </font></Label>
+      <Label layoutX="425.0" layoutY="147.0" text="Gestiónate durante tu TFG" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="35.0" />
+         </font></Label>
+      <TextField fx:id="tfUser" layoutX="334.0" layoutY="298.0" prefHeight="55.0" prefWidth="613.0" promptText="Nombre de Usuario" stylesheets="@../css/Login.css" />
+      <PasswordField fx:id="pfPass" layoutX="334.0" layoutY="377.0" prefHeight="55.0" prefWidth="613.0" promptText="Contraseña" stylesheets="@../css/Login.css" />
+      <Button fx:id="btnLogIn" layoutX="334.0" layoutY="454.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="55.0" prefWidth="613.0" stylesheets="@../css/Login.css" text="INICIAR SESIÓN" />
+      <Button fx:id="btnExit" layoutX="334.0" layoutY="527.0" mnemonicParsing="false" onAction="#exit" prefHeight="55.0" prefWidth="613.0" style="-fx-background-color: GRAY;" stylesheets="@../css/Login.css" text="SALIR" />
    </children>
 </Pane>

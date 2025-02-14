@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: rgb(20, 20, 20);
+}
+
+.text-field {
+    -fx-background-color: rgb(50, 50, 50);
+    -fx-background-radius: 18px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.password-field {
+    -fx-background-color: rgb(50, 50, 50);
+    -fx-background-radius: 18px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.button {
+	-fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-background-radius: 18px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
