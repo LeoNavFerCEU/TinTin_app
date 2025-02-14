@@ -3,6 +3,7 @@ package tintin.services;
 import tintin.model.User;
 import tintin.services.exceptions.NotActiveUserException;
 import tintin.services.exceptions.StudentNotFoundException;
+import tintin.services.exceptions.UserException;
 import tintin.services.exceptions.UserNotFoundException;
 import tintin.services.exceptions.UserUnauthorizedException;
 
