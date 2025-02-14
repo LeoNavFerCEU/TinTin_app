@@ -3,10 +3,8 @@ package tintin.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tintin.model.Student;
-
+import tintin.model.FCTRegister;
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long>{
-
+public interface FCTRegisterRepository extends JpaRepository<FCTRegister, Long>{
 
 }

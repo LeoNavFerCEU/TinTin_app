@@ -5,7 +5,7 @@ public class RegisterNotFoundException extends Exception {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8408696571398357493L;
+	private static final long serialVersionUID = -2809724175829278142L;
 
 	public RegisterNotFoundException() {
 	}
