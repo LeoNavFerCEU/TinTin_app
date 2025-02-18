@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tintin.model.Dates;
-import tintin.services.DatesService;
+import tintin.services.interfaces.DatesService;
+
 
 @RestController
 @RequestMapping("dates")

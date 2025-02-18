@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 				throw new NotActiveUserException("The user isn't active.");
 			}
 			// 3. Comprobar si el usuario tiene un alumno asociado
-			if (user.getAssociatedProfile()==null) {
+			if (user.getLinkedProfile()==null) {
 				log.debug("The user is not associated with a student...");
 				throw new StudentNotFoundException("The user is not associated with a student.");
 			}

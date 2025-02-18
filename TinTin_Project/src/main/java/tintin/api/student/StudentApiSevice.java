@@ -3,7 +3,7 @@ package tintin.api.student;
 import tintin.dto.StudentDto;
 import tintin.model.FCTRegister;
 import tintin.model.Student;
-import tintin.services.StudentService;
+import tintin.services.StudentServiceImpl;
 import tintin.services.exceptions.StudentNotFoundException;
 
 import org.modelmapper.ModelMapper;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class StudentApiSevice {
 
 	@Autowired
-	private StudentService studentService;
+	private StudentServiceImpl studentService;
 
 	@GetMapping("{id}")
 	public StudentDto getStudent(@PathVariable Long id) throws StudentNotFoundException {

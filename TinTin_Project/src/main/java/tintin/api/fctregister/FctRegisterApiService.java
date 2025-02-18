@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tintin.model.Dates;
 import tintin.model.FCTRegister;
-import tintin.services.FCTRegisterService;
+
 import tintin.services.exceptions.DuplicateRegisterException;
 import tintin.services.exceptions.RegisterNotFoundException;
 import tintin.services.exceptions.StudentNotFoundException;
+import tintin.services.interfaces.FCTRegisterService;
 
 @RestController
 @RequestMapping("registers")
