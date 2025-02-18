@@ -7,16 +7,16 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.AddRecordController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1030.0" style="-fx-background-color: rgb(20,20,20);" stylesheets="@../css/AddRecord.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.AddRecordController">
    <children>
-      <Label layoutX="67.0" layoutY="65.0" text="REGISTRAR" />
-      <Button fx:id="btnCancel" layoutX="272.0" layoutY="462.0" mnemonicParsing="false" onAction="#cancel" text="CANCELAR" />
-      <Button fx:id="btnRegister" layoutX="647.0" layoutY="462.0" mnemonicParsing="false" onAction="#register" text="REGISTRAR" />
+      <Button fx:id="btnCancel" layoutX="272.0" layoutY="462.0" mnemonicParsing="false" onAction="#cancel" prefHeight="44.0" prefWidth="210.0" text="CANCELAR" />
+      <Button fx:id="btnRegister" layoutX="571.0" layoutY="462.0" mnemonicParsing="false" onAction="#register" prefHeight="44.0" prefWidth="210.0" text="REGISTRAR" />
       <Label layoutX="143.0" layoutY="173.0" text="FECHA" />
       <Label layoutX="143.0" layoutY="257.0" text="HORAS" />
       <Label layoutX="146.0" layoutY="353.0" text="DETALLE" />
       <ComboBox fx:id="cbDates" layoutX="370.0" layoutY="169.0" prefWidth="150.0" />
       <Spinner fx:id="spHours" layoutX="370.0" layoutY="253.0" />
       <TextArea fx:id="taDetail" layoutX="370.0" layoutY="324.0" prefHeight="90.0" prefWidth="350.0" />
+      <Label id="title" layoutX="21.0" layoutY="14.0" stylesheets="@../css/Records.css" text="REGISTRAR" />
    </children>
 </AnchorPane>
