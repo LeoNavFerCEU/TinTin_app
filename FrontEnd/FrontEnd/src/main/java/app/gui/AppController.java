@@ -20,6 +20,7 @@ public class AppController {
 	public static String FXML_MAIN = PATH_BASE + "Main.fxml";
 	public static String FXML_ABOUTYOU = PATH_BASE + "AboutYou.fxml";
 	public static String FXML_RECORDS = PATH_BASE + "Records.fxml";
+	public static String FXML_ADDRECORD = PATH_BASE + "AddRecord.fxml";
 	public static String FXML_CHANGEPASS = PATH_BASE + "ChangePass.fxml";
 	
 	private static Stage primaryStage;

@@ -9,8 +9,11 @@ import javafx.scene.control.TextField;
 public class LoginController extends AppController{
 
     @FXML
-    private Button btLogIn;
-
+    private Button btnLogIn;
+    
+    @FXML
+    private Button btnExit;
+    
     @FXML
     private PasswordField pfPass;
 
@@ -20,6 +23,11 @@ public class LoginController extends AppController{
     @FXML
     void LogIn(ActionEvent event) {
     	changeScene(FXML_MAIN);
+    }
+    
+    @FXML
+    void exit(ActionEvent event) {
+    	System.exit(0);
     }
 
 }
