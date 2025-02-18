@@ -15,7 +15,7 @@ import tintin.services.interfaces.DatesService;
 
 @RestController
 @RequestMapping("dates")
-public class DateApiService {
+public class DatesApiService {
 
 	@Autowired
 	private DatesService datesService;
