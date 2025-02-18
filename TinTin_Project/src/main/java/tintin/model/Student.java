@@ -24,10 +24,8 @@ public class Student {
 	private String courseYear;
 	@ManyToOne
 	@JoinColumn(name = "school_tutor_id")
-	@Column(name = "school_tutor")
-	private SchoolTutor tutor;
+	private SchoolTutor schoolTutor;
 	@ManyToOne
 	@JoinColumn(name = "company_id")
-	@Column(name = "assigned_company")
-	private Company company;
+	private Company assignedCompany;
 }

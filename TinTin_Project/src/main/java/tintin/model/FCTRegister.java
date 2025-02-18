@@ -23,8 +23,7 @@ public class FCTRegister {
 	private Student associatedStudent;
 	@ManyToOne
 	@JoinColumn(name = "date")
-	@Column(name = "associated_date")
-	private Dates associatedDatePeriod;
+	private Dates associatedDate;
 	@Column(name = "hours")
 	private Integer numHours;
 	private String description;

@@ -23,7 +23,6 @@ public class User {
 	private String profileType;
 	@OneToOne
 	@JoinColumn(name = "linked_profile")
-	@Column(name = "linked_profile")
-	private Student associatedProfile;
+	private Student linkedProfile;
 	private Boolean active;
 }

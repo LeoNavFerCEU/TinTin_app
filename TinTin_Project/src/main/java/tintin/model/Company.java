@@ -20,7 +20,6 @@ public class Company {
 	private String tutorName;
 	@Column(name = "tutor_email")
 	private String tutorMail;
-	@Column(name = "tutor_tfno")
 	private String tutorTlfno;
 	private Boolean active;
 }
