@@ -49,8 +49,7 @@ public class UserServiceImpl implements UserService{
 				throw new StudentNotFoundException("The user is not associated with a student.");
 			}
 			// 4. Comprobar password cifrándola previamente
-			String passwordCipher = DigestUtils.sha256Hex(password);
-			if (!user.getPassword().equals(passwordCipher)) {
+			if (!user.getPassword().equals(password)) {
 				log.warn("Incorrect password");
 				throw new UserUnauthorizedException("Incorrect user password");
 			}
