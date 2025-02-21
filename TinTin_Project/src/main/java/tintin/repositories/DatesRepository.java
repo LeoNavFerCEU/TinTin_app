@@ -10,5 +10,5 @@ import tintin.model.Dates;
 
 @Repository
 public interface DatesRepository extends JpaRepository<Dates, LocalDate>{
-	public List<Dates> findByDateBetween(LocalDate since, LocalDate till);
+	public List<Dates> findAllByDateBetween(LocalDate since, LocalDate till);
 }

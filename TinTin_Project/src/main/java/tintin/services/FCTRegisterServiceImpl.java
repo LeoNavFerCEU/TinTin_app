@@ -1,5 +1,6 @@
 package tintin.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,16 +33,19 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 	private DatesRepository datesRepo;
 
 	@Override
-	public List<FCTRegister> getRegisterDates(Long idStudent) throws StudentNotFoundException, UserException {
+	public List<Dates> getRegisterDates(Long idStudent, LocalDate desde, LocalDate hasta) throws RegisterNotFoundException, UserException {
 		log.debug("Looking for register dates...");
 		try {
-			List<Dates> dates = datesRepo.findAll();
+			List<Dates> dates = datesRepo.findAllByDateBetween(desde, hasta);
 			List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent(idStudent);
-			if (registers.isEmpty()) {
-				log.warn("Student not found in table register");
-				throw new StudentNotFoundException("Student not found in table register");
+			for (FCTRegister register : registers) {
+				dates.stream().filter(date -> date.getDate() == register.getAssociatedDate().getDate());
 			}
-			return registers;
+			if (dates.isEmpty()) {
+				log.warn("Not register were found in table register");
+				throw new RegisterNotFoundException("Not register were found in table register");
+			}
+			return dates;
 		} catch (DataAccessException e) {
 			log.error("Something went wrong with the consult", e);
 			throw new UserException("Something went wrong with the consult", e);
@@ -49,14 +53,18 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 	}
 
 	@Override
-	public List<Dates> getNotRegisterDates(Long idStudent) throws StudentNotFoundException, UserException {
+	public List<Dates> getNotRegisterDates(Long idStudent, LocalDate desde, LocalDate hasta) throws UserException, RegisterNotFoundException {
 		log.debug("Looking for unregister dates...");
 		try {
-			List<Dates> dates = datesRepo.findAll();
-			//dates.stream().filter(date -> date.get() != idStudent);
+			List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent(idStudent);
+			List<Dates> dates = datesRepo.findAllByDateBetween(desde, hasta);
+			
+			for (FCTRegister register : registers) {
+				dates.stream().filter(date -> date.getDate() != register.getAssociatedDate().getDate());
+			}
 			if (dates.isEmpty()) {
-				log.warn("Student not found in table register");
-				throw new StudentNotFoundException("Student not found in table register");
+				log.warn("Not register were found in table register");
+				throw new RegisterNotFoundException("Not register were found in table register");
 			}
 			return dates;
 		} catch (DataAccessException e) {

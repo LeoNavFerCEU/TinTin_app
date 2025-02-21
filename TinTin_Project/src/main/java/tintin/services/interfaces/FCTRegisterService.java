@@ -1,5 +1,6 @@
 package tintin.services.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import tintin.model.Dates;
@@ -12,9 +13,9 @@ import tintin.services.exceptions.UserException;
 
 public interface FCTRegisterService {
 	
-	public List<FCTRegister> getRegisterDates(Long idStudent) throws StudentNotFoundException, UserException;
+	public List<Dates> getRegisterDates(Long idStudent, LocalDate desde, LocalDate hasta) throws RegisterNotFoundException, UserException;
 	
-	public List<Dates> getNotRegisterDates(Long idStudent) throws StudentNotFoundException, UserException;
+	public List<Dates> getNotRegisterDates(Long idStudent, LocalDate desde, LocalDate hasta) throws UserException, RegisterNotFoundException;
 	
 	public void deleteRegister(Long idRegister) throws RegisterNotFoundException, UserException;
 	
