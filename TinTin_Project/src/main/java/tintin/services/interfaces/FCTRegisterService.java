@@ -8,7 +8,6 @@ import tintin.model.FCTRegister;
 import tintin.model.Student;
 import tintin.services.exceptions.DuplicateRegisterException;
 import tintin.services.exceptions.RegisterNotFoundException;
-import tintin.services.exceptions.StudentNotFoundException;
 import tintin.services.exceptions.UserException;
 
 public interface FCTRegisterService {

@@ -26,7 +26,7 @@ public class DatesServiceImpl implements DatesService{
 	public List<Dates> getDates(LocalDate since, LocalDate till) throws UserException {
 		try {
 			log.debug("Consulting dates...");
-		return datesRepo.findByDateBetween(since, till);
+		return datesRepo.findAllByDateBetween(since, till);
 		} catch (DataAccessException e) {
 			log.error("Something went worng with the consult", e);
 			throw new UserException("Something went worng with the consult", e);

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tintin.model.Dates;
+import tintin.services.exceptions.UserException;
 import tintin.services.interfaces.DatesService;
 
 
@@ -21,7 +22,7 @@ public class DatesApiService {
 	private DatesService datesService;
 	
 	@GetMapping
-	public List<Dates> getDates(@RequestParam LocalDate since,@RequestParam LocalDate until) {
+	public List<Dates> getDates(@RequestParam LocalDate since,@RequestParam LocalDate until) throws UserException {
 		return datesService.getDates(since, until);
 	}
 	

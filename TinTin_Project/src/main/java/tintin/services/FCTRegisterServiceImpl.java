@@ -17,7 +17,6 @@ import tintin.repositories.DatesRepository;
 import tintin.repositories.FCTRegisterRepository;
 import tintin.services.exceptions.DuplicateRegisterException;
 import tintin.services.exceptions.RegisterNotFoundException;
-import tintin.services.exceptions.StudentNotFoundException;
 import tintin.services.exceptions.UserException;
 import tintin.services.interfaces.FCTRegisterService;
 

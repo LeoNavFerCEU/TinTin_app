@@ -5,6 +5,7 @@ import tintin.model.FCTRegister;
 import tintin.model.Student;
 import tintin.services.StudentServiceImpl;
 import tintin.services.exceptions.StudentNotFoundException;
+import tintin.services.exceptions.UserException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class StudentApiSevice {
 	private StudentServiceImpl studentService;
 
 	@GetMapping("{id}")
-	public StudentDto getStudent(@PathVariable Long id) throws StudentNotFoundException {
+	public StudentDto getStudent(@PathVariable Long id) throws StudentNotFoundException, UserException {
 		Student student = studentService.getStudent(id);
 		StudentDto dto = new StudentDto();
 		ModelMapper mapper = new ModelMapper();

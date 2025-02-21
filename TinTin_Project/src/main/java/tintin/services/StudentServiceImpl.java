@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import tintin.model.FCTRegister;
 import tintin.model.Student;
 import tintin.repositories.StudentRepository;
 import tintin.services.exceptions.StudentNotFoundException;
