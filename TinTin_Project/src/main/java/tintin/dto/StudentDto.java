@@ -11,6 +11,6 @@ public class StudentDto {
 	private String tutorName;
 	private String companyName;
 	private Integer hoursTotal;
-	private Integer hoursWorked;
+	private String hoursWorked;
 	private Integer hoursLeft;
 }

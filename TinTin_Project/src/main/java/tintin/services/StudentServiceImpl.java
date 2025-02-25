@@ -1,5 +1,7 @@
 package tintin.services;
 
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -8,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import tintin.dto.StudentDto;
+import tintin.model.FCTRegister;
 import tintin.model.Student;
+import tintin.repositories.FCTRegisterRepository;
 import tintin.repositories.StudentRepository;
 import tintin.services.exceptions.StudentNotFoundException;
 import tintin.services.exceptions.UserException;
@@ -22,16 +27,31 @@ public class StudentServiceImpl implements StudentService{
 	@Autowired
 	private StudentRepository studentRepo;
 	
+	@Autowired
+	private FCTRegisterRepository registerRepo;
+	
 	@Override
-	public Student getStudent(Long idStudent) throws StudentNotFoundException, UserException {
+	public StudentDto getStudent(Long idStudent) throws StudentNotFoundException, UserException {
 		log.debug("Consulting student with id: " + idStudent);
 		try {
-			Optional<Student> student = studentRepo.findById(idStudent);
-		if (!student.isPresent()) {
+			Optional<Student> studentConsulted = studentRepo.findById(idStudent);
+		if (!studentConsulted.isPresent()) {
 			log.warn("The student doesn't exist.");
 			throw new StudentNotFoundException("The student doesn't exist.");
 		}
-		return student.get();
+		List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent(idStudent);
+		Integer hoursWorked = 0;
+		for (FCTRegister fctRegister : registers) {
+			hoursWorked += fctRegister.getNumHours();
+		}
+		Integer hoursLeft = 370-hoursWorked;
+		Float percentage = (float) ((hoursWorked*100)/370);
+		DecimalFormat df = new DecimalFormat("#");
+		StudentDto student = new StudentDto();
+		student.setHoursTotal(370);
+		student.setHoursWorked(hoursWorked + "(" + df.format(percentage) + "%)");
+		student.setHoursLeft(hoursLeft);
+		return student;
 		} catch (DataAccessException e) {
 			log.error("Something went worng with the consult", e);
 			throw new UserException("Something went worng with the consult", e);
