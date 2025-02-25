@@ -1,16 +1,16 @@
 package tintin.api.student;
 
 import tintin.dto.StudentDto;
-import tintin.model.FCTRegister;
-import tintin.model.Student;
-import tintin.services.StudentServiceImpl;
 import tintin.services.exceptions.StudentNotFoundException;
 import tintin.services.exceptions.UserException;
+import tintin.services.interfaces.StudentService;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -19,21 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class StudentApiSevice {
 
 	@Autowired
-	private StudentServiceImpl studentService;
+	private StudentService studentService;
 
-	@GetMapping("{id}")
-	public StudentDto getStudent(@PathVariable Long id) throws StudentNotFoundException, UserException {
-		Student student = studentService.getStudent(id);
-		StudentDto dto = new StudentDto();
-		ModelMapper mapper = new ModelMapper();
-		mapper.map(student, dto);
-		return dto;
-	}
-	
-	@GetMapping("registers/{id}")
-	public FCTRegister getRegisters(@PathVariable Long id) {
-//		return studentService.getRegisters(studentService.getStudent(id));
-		return null;
+	@Operation(summary = "Get student by ID",description = "Returns a single student")
+	@GetMapping("{idStudent}")
+	public StudentDto getStudent(@PathVariable Long idStudent) throws StudentNotFoundException, UserException {
+		return studentService.getStudent(idStudent);
 	}
 
 }

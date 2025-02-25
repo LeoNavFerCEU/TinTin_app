@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import tintin.api.user.request.ChangePasswordRequest;
 import tintin.model.User;
 import tintin.services.exceptions.NotActiveUserException;
@@ -24,13 +26,15 @@ public class UserApiService {
 	@Autowired
 	private UserService userService;
 	
+	@Operation(summary = "Logs user into the system",description = "Returns a single user")
 	@GetMapping
 	public User login(@RequestParam String username, @RequestParam String password) throws UserNotFoundException, StudentNotFoundException, NotActiveUserException, UserUnauthorizedException, UserException {
 		return userService.login(username, password);
 	}
 	
+	@Operation(summary = "Update student's password by ID")
 	@PutMapping
-	public void changePassword(@RequestBody ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
+	public void changePassword(@Valid @RequestBody ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
 		userService.changePassword(request.getId(),
 				request.getCurrentPassword(), request.getNewPassword());
 	}

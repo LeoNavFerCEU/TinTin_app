@@ -24,6 +24,7 @@ public class FCTRegister {
 	@ManyToOne
 	@JoinColumn(name = "date")
 	private Dates associatedDate;
+	//CAMBIAR A DOUBLE, LAS HORAS PUEDEN TENER DECIMALES. EJ: 6.5
 	@Column(name = "hours")
 	private Integer numHours;
 	private String description;
