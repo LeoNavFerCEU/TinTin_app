@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import tintin.api.user.request.ChangePasswordRequest;
 import tintin.model.User;
 import tintin.services.exceptions.NotActiveUserException;
@@ -33,7 +34,7 @@ public class UserApiService {
 	
 	@Operation(summary = "Update student's password by ID")
 	@PutMapping
-	public void changePassword(@RequestBody ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
+	public void changePassword(@Valid @RequestBody ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
 		userService.changePassword(request.getId(),
 				request.getCurrentPassword(), request.getNewPassword());
 	}

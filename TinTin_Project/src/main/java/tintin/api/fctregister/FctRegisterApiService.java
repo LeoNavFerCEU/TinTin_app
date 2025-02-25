@@ -3,7 +3,9 @@ package tintin.api.fctregister;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import tintin.api.fctregister.request.CreateRegisterRequest;
 import tintin.model.FCTRegister;
 
 import tintin.services.exceptions.DuplicateRegisterException;
@@ -29,11 +32,11 @@ public class FctRegisterApiService {
 	@Autowired
 	private FCTRegisterService fctRegisterService;
 	
-	//FALTA DATETIMEFORMAT
 	@Operation(summary = "Gets registers of a student by ID",description = "Returns a list of registers concurred between specified dates (It may be empty)")
 	@GetMapping("filter/{idStudent}")
 	public List<FCTRegister> getRegisterDates(@PathVariable Long idStudent, @RequestParam String filtro,
-			@RequestParam LocalDate since,@RequestParam LocalDate until) throws UserException, StudentNotFoundException, RegisterNotFoundException {
+			@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate since,
+			@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate until) throws UserException, StudentNotFoundException, RegisterNotFoundException {
 		return fctRegisterService.getRegisterDates(idStudent, filtro, since, until);
 	}
 	
@@ -51,7 +54,10 @@ public class FctRegisterApiService {
 	
 	@Operation(summary = "Add register",description = "Returns added register")
 	@PostMapping
-	public FCTRegister createRegister(@RequestBody FCTRegister register) throws DuplicateRegisterException, UserException {
+	public FCTRegister createRegister(@RequestBody CreateRegisterRequest request) throws DuplicateRegisterException, UserException {
+		FCTRegister register = new FCTRegister();
+		ModelMapper mapper = new ModelMapper();
+		mapper.map(request, register);
 		return fctRegisterService.createRegister(register);
 	}
 
