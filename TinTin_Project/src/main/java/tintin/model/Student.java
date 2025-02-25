@@ -23,9 +23,9 @@ public class Student {
 	private String internshipPeriod;
 	private String courseYear;
 	@ManyToOne
-	@JoinColumn(name = "school_tutor_id")
+	@JoinColumn(name = "school_tutor")
 	private SchoolTutor schoolTutor;
 	@ManyToOne
-	@JoinColumn(name = "company_id")
+	@JoinColumn(name = "assigned_company")
 	private Company assignedCompany;
 }

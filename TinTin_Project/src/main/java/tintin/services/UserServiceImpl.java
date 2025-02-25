@@ -56,15 +56,15 @@ public class UserServiceImpl implements UserService{
 			log.debug("Login correcto");
 			return user;
 		} catch (DataAccessException e) {
-			log.error("Error while updating user pass", e);
-			throw new UserException("Error while updating user", e);
+			log.error("Error while logging in...", e);
+			throw new UserException("Error while logging in.", e);
 		}
 	}
 
 	@Override
 	public void changePassword(Long idUser, String oldPassword, String newPassword)
 			throws UserNotFoundException, UserUnauthorizedException, UserException {
-		try {	
+		try {
 			// 1. Comprobar que password sean diferentes
 			if (newPassword.equals(oldPassword)) {
 				log.debug("Old pass equal to the new one, the change will not be made");

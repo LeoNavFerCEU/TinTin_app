@@ -34,7 +34,7 @@ public class UserApiService {
 	
 	@Operation(summary = "Update student's password by ID")
 	@PutMapping
-	public void changePassword(@Valid @RequestBody ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
+	public void changePassword(@RequestBody @Valid ChangePasswordRequest request) throws UserNotFoundException, UserUnauthorizedException, UserException {
 		userService.changePassword(request.getId(),
 				request.getCurrentPassword(), request.getNewPassword());
 	}

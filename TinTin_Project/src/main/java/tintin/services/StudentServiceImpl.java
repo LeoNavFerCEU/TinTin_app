@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class StudentServiceImpl implements StudentService{
 			log.warn("The student doesn't exist.");
 			throw new StudentNotFoundException("The student doesn't exist.");
 		}
-		List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent(idStudent);
+		List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent_Id(idStudent);
 		Integer hoursWorked = 0;
 		for (FCTRegister fctRegister : registers) {
 			hoursWorked += fctRegister.getNumHours();
@@ -48,12 +49,14 @@ public class StudentServiceImpl implements StudentService{
 		Float percentage = (float) ((hoursWorked*100)/370);
 		DecimalFormat df = new DecimalFormat("#");
 		StudentDto student = new StudentDto();
+		ModelMapper mapper = new ModelMapper();
+		mapper.map(studentConsulted.get(), student);
 		student.setHoursTotal(370);
 		student.setHoursWorked(hoursWorked + "(" + df.format(percentage) + "%)");
 		student.setHoursLeft(hoursLeft);
 		return student;
 		} catch (DataAccessException e) {
-			log.error("Something went worng with the consult", e);
+			log.error("Something went wrong with the consult", e);
 			throw new UserException("Something went worng with the consult", e);
 		}
 		

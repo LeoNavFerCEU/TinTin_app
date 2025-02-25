@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import tintin.model.User;
 
-
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	public Optional<User> findOneByUsername(String username);

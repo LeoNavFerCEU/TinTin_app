@@ -62,7 +62,7 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 			List<Dates> dates = datesRepo.findAllByDateBetween(desde, hasta);
 
 			// Obtener registros existentes de una sola consulta
-			Map<LocalDate, FCTRegister> registersMap = registerRepo.findAllByAssociatedStudent(idStudent).stream()
+			Map<LocalDate, FCTRegister> registersMap = registerRepo.findAllByAssociatedStudent_Id(idStudent).stream()
 					.collect(Collectors.toMap(r -> r.getAssociatedDate().getDate(), r -> r));
 
 			List<FCTRegister> registers = new ArrayList<>();

@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "fct_register")
 public class FCTRegister {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,10 @@ public class FCTRegister {
 	@Column(name = "fct_register_id")
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name = "student_id")
+	@JoinColumn(name = "associated_student")
 	private Student associatedStudent;
 	@ManyToOne
-	@JoinColumn(name = "date")
+	@JoinColumn(name = "associated_date")
 	private Dates associatedDate;
 	//CAMBIAR A DOUBLE, LAS HORAS PUEDEN TENER DECIMALES. EJ: 6.5
 	@Column(name = "hours")
