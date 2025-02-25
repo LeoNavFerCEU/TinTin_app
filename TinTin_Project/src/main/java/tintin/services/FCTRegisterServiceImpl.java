@@ -116,11 +116,6 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 				log.warn("Register already exists.");
 				throw new DuplicateRegisterException("Register already exists.");
 			}
-			//!!Hay que asociar el alumno y la fecha al registro
-			//register.setAssociatedDate(LocalDate.now());
-//			if (register.get) {
-//				
-//			}
 			return registerRepo.save(register);
 		} catch (DataAccessException e) {
 			log.error("Something went wrong with the consult", e);
