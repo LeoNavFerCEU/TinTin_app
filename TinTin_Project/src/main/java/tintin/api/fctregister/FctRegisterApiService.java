@@ -29,6 +29,7 @@ public class FctRegisterApiService {
 	@Autowired
 	private FCTRegisterService fctRegisterService;
 	
+	//FALTA DATETIMEFORMAT
 	@Operation(summary = "Gets registers of a student by ID",description = "Returns a list of registers concurred between specified dates (It may be empty)")
 	@GetMapping("filter/{idStudent}")
 	public List<FCTRegister> getRegisterDates(@PathVariable Long idStudent, @RequestParam String filtro,
