@@ -2,7 +2,6 @@ package tintin.services;
 
 import java.util.Optional;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,14 +77,12 @@ public class UserServiceImpl implements UserService{
 			}
 			User user = userOpt.get();
 			// 3. Comprobamos password antigua
-			String passwordCipherOld = DigestUtils.sha256Hex(oldPassword);
-			if (!user.getPassword().equals(passwordCipherOld)) {
+			if (!user.getPassword().equals(oldPassword)) {
 				log.debug("The old password indicated is incorrect");
 				throw new UserUnauthorizedException("The old password is incorrect");
 			}
 			//Ciframos y asignamos la nueva password
-			String passwordCipherNew = DigestUtils.sha256Hex(newPassword);
-			user.setPassword(passwordCipherNew);
+			user.setPassword(newPassword);
 			userRepo.save(user);
 			log.debug("Password changed succesfully");
 		} catch (DataAccessException e) {

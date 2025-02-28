@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import tintin.api.fctregister.request.CreateRegisterRequest;
 import tintin.model.FCTRegister;
 
@@ -54,7 +55,7 @@ public class FctRegisterApiService {
 	
 	@Operation(summary = "Add register",description = "Returns added register")
 	@PostMapping
-	public FCTRegister createRegister(@RequestBody CreateRegisterRequest request) throws DuplicateRegisterException, UserException {
+	public FCTRegister createRegister(@RequestBody @Valid CreateRegisterRequest request) throws DuplicateRegisterException, UserException {
 		FCTRegister register = new FCTRegister();
 		ModelMapper mapper = new ModelMapper();
 		mapper.map(request, register);
