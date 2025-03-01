@@ -1,4 +1,4 @@
-package tintin.api.fctregister;
+ package tintin.api.fctregister;
 
 import java.time.LocalDate;
 import java.util.List;
