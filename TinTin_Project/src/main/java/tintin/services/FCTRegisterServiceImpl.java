@@ -110,8 +110,7 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 	public FCTRegister createRegister(FCTRegister register) throws DuplicateRegisterException, UserException {
 		log.debug("Creating new Register: " + register);
 		try {
-			FCTRegister registerConsulted = registerRepo
-					.findOneByAssociatedDate_Date(register.getAssociatedDate().getDate());
+			FCTRegister registerConsulted = registerRepo.findOneByAssociatedDate_Date(register.getAssociatedDate().getDate());
 			if (registerConsulted != null) {
 				log.warn("Register already exists.");
 				throw new DuplicateRegisterException("Register already exists.");
