@@ -56,7 +56,7 @@ public class RecordController extends AppController{
 
     @FXML
     void cancel(ActionEvent event) {
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
     	mainPane.setCenter(loadScene(FXML_RECORDS));
     }
 
@@ -73,7 +73,10 @@ public class RecordController extends AppController{
 		                .header("API-KEY", "fctapikey")
 		                .DELETE()
 		                .build();
-		        client.send(request, HttpResponse.BodyHandlers.ofString());
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		        if (response.statusCode()!= 200) {
+					throw new Exception("Error al borrar un registro");
+				}
 				return null;
 			}
 			
@@ -85,13 +88,13 @@ public class RecordController extends AppController{
     		
 			@Override
 			protected void failed() {
-				errorAlert.setContentText("Error al borrar el registro");
+				errorAlert.setContentText(getException().getMessage());
 				errorAlert.showAndWait();
 			}
 			
     	};
     	new Thread(task).start();
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
     	mainPane.setCenter(loadScene(FXML_RECORDS));
     }
 

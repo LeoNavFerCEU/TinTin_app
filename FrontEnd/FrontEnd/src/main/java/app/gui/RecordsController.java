@@ -67,7 +67,7 @@ public class RecordsController extends AppController {
 
 	@FXML
 	void changeToAddRecords(ActionEvent event) {
-		BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+		BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
 		mainPane.setCenter(loadScene(FXML_ADDRECORD));
 	}
 
@@ -110,7 +110,7 @@ public class RecordsController extends AppController {
 
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getMessage());
+				errorAlert.setContentText("Error consultando registros");
 				errorAlert.showAndWait();
 			}
 
@@ -140,7 +140,7 @@ public class RecordsController extends AppController {
 			@Override
 			protected List<Record> call() throws Exception {
 				String url = "http://localhost:8080/register/filter/" + student.getId()
-						+ "?filtro=TODAS&since=01/01/2025&until=30/12/2025";
+						+ "?filtro=TODAS&since=01/01/1999&until=30/12/2040";
 				HttpClient client = HttpClient.newHttpClient();
 				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header("API-KEY", "fctapikey")
 						.header("Accept", "application/json").GET().build();
@@ -191,7 +191,7 @@ public class RecordsController extends AppController {
 		table.setOnMouseClicked(event -> {
 			if (table.getSelectionModel().getSelectedItem() != null) {
 				addParam("RECORD", table.getSelectionModel().getSelectedItem());
-				BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+				BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
 				mainPane.setCenter(loadScene(FXML_RECORD));
 			}
 		});

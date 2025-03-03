@@ -64,6 +64,9 @@ public class UserServiceImpl implements UserService{
 	public void changePassword(Long idUser, String oldPassword, String newPassword)
 			throws UserNotFoundException, UserUnauthorizedException, UserException {
 		try {
+			if (oldPassword.isBlank() || newPassword.isBlank()) {
+				throw new UserUnauthorizedException("All fields are required");
+			}
 			// 1. Comprobar que password sean diferentes
 			if (newPassword.equals(oldPassword)) {
 				log.debug("Old pass equal to the new one, the change will not be made");
