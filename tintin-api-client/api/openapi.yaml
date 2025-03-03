@@ -1,0 +1,461 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- description: Generated server url
+  url: http://localhost:8080
+paths:
+  /user:
+    get:
+      description: Returns a single user
+      operationId: login
+      parameters:
+      - explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: password
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: Logs user into the system
+      tags:
+      - user-api-service
+      x-accepts:
+      - '*/*'
+    put:
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+      summary: Update student's password by ID
+      tags:
+      - user-api-service
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /register:
+    post:
+      description: Returns added register
+      operationId: createRegister
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRegisterRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FCTRegister'
+          description: OK
+      summary: Add register
+      tags:
+      - fct-register-api-service
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /student/{idStudent}:
+    get:
+      description: Returns a single student
+      operationId: getStudent
+      parameters:
+      - explode: false
+        in: path
+        name: idStudent
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+          description: OK
+      summary: Get student by ID
+      tags:
+      - student-api-sevice
+      x-accepts:
+      - '*/*'
+  /register/{idRegister}:
+    delete:
+      operationId: deleteRegister
+      parameters:
+      - explode: false
+        in: path
+        name: idRegister
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: OK
+      summary: Delete register by ID
+      tags:
+      - fct-register-api-service
+      x-accepts:
+      - application/json
+    get:
+      description: Returns a single register
+      operationId: getRegister
+      parameters:
+      - explode: false
+        in: path
+        name: idRegister
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FCTRegister'
+          description: OK
+      summary: Get register by ID
+      tags:
+      - fct-register-api-service
+      x-accepts:
+      - '*/*'
+  /register/filter/{idStudent}:
+    get:
+      description: Returns a list of registers concurred between specified dates (It
+        may be empty)
+      operationId: getRegisterDates
+      parameters:
+      - explode: false
+        in: path
+        name: idStudent
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: filtro
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: since
+        required: true
+        schema:
+          format: date
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: until
+        required: true
+        schema:
+          format: date
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/FCTRegister'
+                type: array
+          description: OK
+      summary: Gets registers of a student by ID
+      tags:
+      - fct-register-api-service
+      x-accepts:
+      - '*/*'
+components:
+  schemas:
+    ChangePasswordRequest:
+      example:
+        newPassword: newPassword
+        id: 0
+        currentPassword: currentPassword
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+        id:
+          format: int64
+          type: integer
+      required:
+      - currentPassword
+      - newPassword
+    Company:
+      example:
+        tutorName: tutorName
+        name: name
+        active: true
+        id: 5
+        tutorTlfno: tutorTlfno
+        tutorMail: tutorMail
+      properties:
+        id:
+          description: Company ID. Autogenerate on POST requests
+          format: int64
+          type: integer
+        name:
+          type: string
+        tutorName:
+          type: string
+        tutorMail:
+          type: string
+        tutorTlfno:
+          type: string
+        active:
+          type: boolean
+    CreateRegisterRequest:
+      example:
+        associatedDate:
+          date: 2000-01-23
+          courseYear: courseYear
+          internshipPeriod: internshipPeriod
+        associatedStudent:
+          courseYear: courseYear
+          fullName: fullName
+          course: course
+          internshipPeriod: internshipPeriod
+          schoolTutor:
+            fullName: fullName
+            active: true
+            id: 1
+          assignedCompany:
+            tutorName: tutorName
+            name: name
+            active: true
+            id: 5
+            tutorTlfno: tutorTlfno
+            tutorMail: tutorMail
+          id: 6
+        description: description
+        numHours: 0
+      properties:
+        associatedStudent:
+          $ref: '#/components/schemas/Student'
+        associatedDate:
+          $ref: '#/components/schemas/Dates'
+        numHours:
+          format: int32
+          maximum: 8
+          minimum: 0
+          type: integer
+        description:
+          type: string
+      required:
+      - description
+      - numHours
+    Dates:
+      example:
+        date: 2000-01-23
+        courseYear: courseYear
+        internshipPeriod: internshipPeriod
+      properties:
+        date:
+          format: date
+          type: string
+        courseYear:
+          type: string
+        internshipPeriod:
+          type: string
+      required:
+      - date
+    SchoolTutor:
+      example:
+        fullName: fullName
+        active: true
+        id: 1
+      properties:
+        id:
+          description: School Tutor ID. Autogenerate on POST requests
+          format: int64
+          type: integer
+        fullName:
+          type: string
+        active:
+          type: boolean
+    Student:
+      example:
+        courseYear: courseYear
+        fullName: fullName
+        course: course
+        internshipPeriod: internshipPeriod
+        schoolTutor:
+          fullName: fullName
+          active: true
+          id: 1
+        assignedCompany:
+          tutorName: tutorName
+          name: name
+          active: true
+          id: 5
+          tutorTlfno: tutorTlfno
+          tutorMail: tutorMail
+        id: 6
+      properties:
+        id:
+          description: Student ID. Autogenerate on POST requests
+          format: int64
+          type: integer
+        fullName:
+          type: string
+        course:
+          type: string
+        internshipPeriod:
+          type: string
+        courseYear:
+          type: string
+        schoolTutor:
+          $ref: '#/components/schemas/SchoolTutor'
+        assignedCompany:
+          $ref: '#/components/schemas/Company'
+    FCTRegister:
+      example:
+        associatedDate:
+          date: 2000-01-23
+          courseYear: courseYear
+          internshipPeriod: internshipPeriod
+        associatedStudent:
+          courseYear: courseYear
+          fullName: fullName
+          course: course
+          internshipPeriod: internshipPeriod
+          schoolTutor:
+            fullName: fullName
+            active: true
+            id: 1
+          assignedCompany:
+            tutorName: tutorName
+            name: name
+            active: true
+            id: 5
+            tutorTlfno: tutorTlfno
+            tutorMail: tutorMail
+          id: 6
+        description: description
+        id: 0
+        numHours: 6
+      properties:
+        id:
+          description: FCT ID. Autogenerate on POST requests
+          format: int64
+          type: integer
+        associatedStudent:
+          $ref: '#/components/schemas/Student'
+        associatedDate:
+          $ref: '#/components/schemas/Dates'
+        numHours:
+          format: int32
+          type: integer
+        description:
+          type: string
+    User:
+      example:
+        password: password
+        profileType: profileType
+        linkedProfile:
+          courseYear: courseYear
+          fullName: fullName
+          course: course
+          internshipPeriod: internshipPeriod
+          schoolTutor:
+            fullName: fullName
+            active: true
+            id: 1
+          assignedCompany:
+            tutorName: tutorName
+            name: name
+            active: true
+            id: 5
+            tutorTlfno: tutorTlfno
+            tutorMail: tutorMail
+          id: 6
+        active: true
+        id: 0
+        username: username
+      properties:
+        id:
+          description: User ID. Autogenerate on POST requests
+          format: int64
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        profileType:
+          type: string
+        linkedProfile:
+          $ref: '#/components/schemas/Student'
+        active:
+          type: boolean
+    StudentDto:
+      example:
+        courseYear: courseYear
+        tutorName: tutorName
+        hoursTotal: 0
+        companyName: companyName
+        fullName: fullName
+        course: course
+        internshipPeriod: internshipPeriod
+        hoursWorked: hoursWorked
+        hoursLeft: 6
+      properties:
+        fullName:
+          type: string
+        course:
+          type: string
+        internshipPeriod:
+          type: string
+        courseYear:
+          type: string
+        tutorName:
+          type: string
+        companyName:
+          type: string
+        hoursTotal:
+          format: int32
+          type: integer
+        hoursWorked:
+          type: string
+        hoursLeft:
+          format: int32
+          type: integer
+  securitySchemes:
+    Authorization:
+      in: header
+      name: API-KEY
+      type: apiKey
+
