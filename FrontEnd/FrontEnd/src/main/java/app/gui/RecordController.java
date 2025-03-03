@@ -85,7 +85,7 @@ public class RecordController extends AppController{
     		
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getMessage());
+				errorAlert.setContentText("Error al borrar el registro");
 				errorAlert.showAndWait();
 			}
 			

@@ -75,7 +75,7 @@ public class LoginController extends AppController{
 			
 			@Override
 			protected void failed() {
-				alert.setContentText(getException().getMessage());
+				alert.setContentText("Error al hacer login");
 				alert.showAndWait();
 			}
 			

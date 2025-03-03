@@ -97,7 +97,7 @@ public class AboutYouController extends AppController{
 			
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getLocalizedMessage());
+				errorAlert.setContentText("Error al consultar este estudiante");
 				errorAlert.showAndWait();
 			}
     		

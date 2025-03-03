@@ -94,7 +94,7 @@ public class ChangePassController extends AppController{
 			
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getMessage());
+				errorAlert.setContentText("Error al cambiar la pass");
 				errorAlert.showAndWait();
 			}
     		

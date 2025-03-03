@@ -122,7 +122,7 @@ public class AddRecordController extends AppController{
     		
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getMessage());
+				errorAlert.setContentText("Error al registrar el estudiante");
 				errorAlert.showAndWait();
 			}
 			
