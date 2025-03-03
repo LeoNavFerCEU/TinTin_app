@@ -77,7 +77,7 @@ public class AddRecordController extends AppController{
 
     @FXML
     void cancel(ActionEvent event) {
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
     	mainPane.setCenter(loadScene(FXML_RECORDS));
     }
 
@@ -110,7 +110,10 @@ public class AddRecordController extends AppController{
 		                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
 		                .build();
 		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());;
-                FCTRegister register = mapper.readValue(response.body(), FCTRegister.class);
+		        if (response.statusCode()!= 200) {
+					throw new Exception("Error al crear un registro");
+				}
+		        FCTRegister register = mapper.readValue(response.body(), FCTRegister.class);
 				return register;
 			}
 			
@@ -128,7 +131,7 @@ public class AddRecordController extends AppController{
 			
     	};
     	new Thread(task).start();
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
     	mainPane.setCenter(loadScene(FXML_RECORDS));
     }
 }

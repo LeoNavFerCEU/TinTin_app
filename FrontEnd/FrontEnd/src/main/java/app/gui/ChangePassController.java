@@ -55,7 +55,7 @@ public class ChangePassController extends AppController{
 
     @FXML
     void cancel(ActionEvent event) {
-    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
     	mainPane.setCenter(loadScene(FXML_ABOUTYOU));
     }
 
@@ -80,7 +80,10 @@ public class ChangePassController extends AppController{
 		                .header("Accept", "application/json")
 		                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
 		                .build();
-		        client.send(request, HttpResponse.BodyHandlers.ofString());;
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		        if (response.statusCode()!= 200) {
+					throw new Exception("Error al borrar un registro");
+				}
 		        return null;
 			}
 			
@@ -88,7 +91,7 @@ public class ChangePassController extends AppController{
 			protected void succeeded() {
 				infoAlert.setContentText("Passowrd changed successfully");
 				infoAlert.showAndWait();
-				BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+				BorderPane mainPane = (BorderPane) getParam("MAIN_SCREEN");
 		    	mainPane.setCenter(loadScene(FXML_ABOUTYOU));
 			}
 			
