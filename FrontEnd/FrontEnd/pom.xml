@@ -22,9 +22,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>TinTin.project.api-client</groupId>
-    		<artifactId>TinTin-api-client</artifactId>
-    		<version>v0</version>
+			<groupId>TinTin.project</groupId>
+			<artifactId>TinTin_Project</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+		    <version>2.18.3</version>
+		</dependency>
+	<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.18.0</version>
 		</dependency>
 	</dependencies>
 </project>

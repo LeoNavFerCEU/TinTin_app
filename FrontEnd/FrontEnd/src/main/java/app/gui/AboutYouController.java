@@ -1,14 +1,19 @@
 package app.gui;
 
-import org.openapitools.client.api.StudentApiSeviceApi;
-import org.openapitools.client.model.Student;
-import org.openapitools.client.model.StudentDto;
-import org.openapitools.client.model.User;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import tintin.dto.StudentDto;
+import tintin.model.Student;
+import tintin.model.User;
 
 public class AboutYouController extends AppController{
 
@@ -48,7 +53,6 @@ public class AboutYouController extends AppController{
     @FXML
     private Label username;
     
-    private StudentApiSeviceApi studentApi;
     private Alert errorAlert;
     
     @FXML
@@ -56,12 +60,22 @@ public class AboutYouController extends AppController{
     	Student student = (Student) getParam("STUDENT");
     	User user = (User) getParam("USER");
     	errorAlert = (Alert) getParam("ERROR_ALERT");
-    	studentApi = new StudentApiSeviceApi();
     	Task<StudentDto> taskStudent = new Task<StudentDto>() {
 
 			@Override
 			protected StudentDto call() throws Exception {
-				return studentApi.getStudent(student.getId());
+				String url = "http://localhost:8080/student/" + student.getId();
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Accept", "application/json")
+		                .GET()
+		                .build();
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());;
+		        ObjectMapper objectMapper = new ObjectMapper();
+                StudentDto student = objectMapper.readValue(response.body(), StudentDto.class);
+				return student;
 			}
 			
 			@Override
@@ -73,8 +87,8 @@ public class AboutYouController extends AppController{
 				lblCourse.setText(dto.getCourse());
 				lblEva.setText(dto.getInternshipPeriod());
 				lblCompany.setText(dto.getCompanyName());
-				lblCompanyTutor.setText("");
-				lblSchoolTutor.setText(dto.getTutorName());
+				lblCompanyTutor.setText(dto.getCompanyTutorName());
+				lblSchoolTutor.setText(dto.getSchoolTutorName());
 				lblYear.setText(dto.getCourseYear());
 				lblHoursToDo.setText(dto.getHoursTotal().toString());
 				lblHoursLeft.setText(dto.getHoursLeft().toString());
@@ -83,7 +97,7 @@ public class AboutYouController extends AppController{
 			
 			@Override
 			protected void failed() {
-				errorAlert.setContentText(getException().getMessage());
+				errorAlert.setContentText(getException().getLocalizedMessage());
 				errorAlert.showAndWait();
 			}
     		

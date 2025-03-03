@@ -54,6 +54,8 @@ public class StudentServiceImpl implements StudentService{
 		student.setHoursTotal(370);
 		student.setHoursWorked(hoursWorked + "(" + df.format(percentage) + "%)");
 		student.setHoursLeft(hoursLeft);
+		student.setSchoolTutorName(studentConsulted.get().getSchoolTutor().getFullName());
+		student.setCompanyTutorName(studentConsulted.get().getAssignedCompany().getTutorName());
 		return student;
 		} catch (DataAccessException e) {
 			log.error("Something went wrong with the consult", e);

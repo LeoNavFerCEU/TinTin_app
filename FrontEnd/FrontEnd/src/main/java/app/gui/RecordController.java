@@ -1,6 +1,9 @@
 package app.gui;
 
-import org.openapitools.client.api.FctRegisterApiServiceApi;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import app.model.Record;
 import javafx.concurrent.Task;
@@ -30,8 +33,6 @@ public class RecordController extends AppController{
     @FXML
     private TextArea taDetail;
     
-    private FctRegisterApiServiceApi fctApi;
-    
     private Alert errorAlert;
     
     private Alert infoAlert;
@@ -40,7 +41,6 @@ public class RecordController extends AppController{
     
     @FXML
     void initialize() {
-    	fctApi = new FctRegisterApiServiceApi();
     	record = (Record) getParam("RECORD");
     	
     	errorAlert = (Alert) getParam("ERROR_ALERT");
@@ -66,7 +66,14 @@ public class RecordController extends AppController{
 
 			@Override
 			protected Void call() throws Exception {
-				fctApi.deleteRegister(record.getIdRegister());
+				String url = "http://localhost:8080/register/" + record.getIdRegister();
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .DELETE()
+		                .build();
+		        client.send(request, HttpResponse.BodyHandlers.ofString());
 				return null;
 			}
 			

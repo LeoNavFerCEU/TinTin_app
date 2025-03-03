@@ -1,14 +1,17 @@
 package app.gui;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openapitools.client.api.FctRegisterApiServiceApi;
-import org.openapitools.client.model.Dates;
-import org.openapitools.client.model.FCTRegister;
-import org.openapitools.client.model.Student;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import app.model.Record;
 import javafx.collections.FXCollections;
@@ -23,6 +26,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import tintin.model.Dates;
+import tintin.model.FCTRegister;
+import tintin.model.Student;
 
 public class RecordsController extends AppController{
 
@@ -54,9 +60,7 @@ public class RecordsController extends AppController{
     private TableColumn<Record, Double> columnHours;
     
     private ObservableList<Record> data;
-    
-    private FctRegisterApiServiceApi fctApi;
-    
+
     private Alert errorAlert;
     
     private Student student;
@@ -67,9 +71,8 @@ public class RecordsController extends AppController{
     	cbSearch.getItems().add("INCOMPLETAS");
     	cbSearch.getItems().add("COMPLETAS");
     	
-    	errorAlert = (Alert) getParam("ALERTA_ERROR");
+    	errorAlert = (Alert) getParam("ERROR_ALERT");
     	
-    	fctApi = new FctRegisterApiServiceApi();
     	student = (Student) getParam("STUDENT");
     	
     	columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -83,7 +86,19 @@ public class RecordsController extends AppController{
 
 			@Override
 			protected List<Record> call() throws Exception {
-				List<FCTRegister> fctRegisters = fctApi.getRegisterDates(student.getId(), "TODAS", null, null);
+				String url = "http://localhost:8080/register/filter/" + student.getId() + 
+						"?filtro=TODAS&since=01/01/2025&until=30/12/2025";
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Accept", "application/json")
+		                .GET()
+		                .build();
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		        ObjectMapper objectMapper = new ObjectMapper();
+		        objectMapper.registerModule(new JavaTimeModule());
+		        List<FCTRegister> fctRegisters = objectMapper.readValue(response.body(), new TypeReference<List<FCTRegister>>() {});
 				List<Record> records = new ArrayList<>();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				List<Dates> dates = new ArrayList<>();
@@ -106,7 +121,10 @@ public class RecordsController extends AppController{
 				ObservableList<String> dates = FXCollections.observableArrayList();
 				getValue().forEach(record -> dates.add(record.getDate()));;
 				cbFrom.setItems(dates);
+				cbFrom.setValue(dates.getFirst());
 				cbTo.setItems(dates);
+				cbTo.setValue(dates.getLast());
+				cbSearch.setValue("TODAS");
 			}
     		
 			@Override
@@ -140,10 +158,21 @@ public class RecordsController extends AppController{
 			@Override
 			protected List<Record> call() throws Exception {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				List<FCTRegister> fctRegisters = fctApi.getRegisterDates(student.getId(), 
-						cbSearch.getSelectionModel().getSelectedItem(), 
-						LocalDate.parse(cbFrom.getSelectionModel().getSelectedItem(), formatter),
-						LocalDate.parse(cbTo.getSelectionModel().getSelectedItem(), formatter));
+				String url = "http://localhost:8080/register/filter/" + student.getId() + 
+						"?filtro=" + cbSearch.getSelectionModel().getSelectedItem() +
+						"&since="+ LocalDate.parse(cbFrom.getSelectionModel().getSelectedItem(), formatter) + 
+						"&until=" + LocalDate.parse(cbTo.getSelectionModel().getSelectedItem(), formatter);
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Accept", "application/json")
+		                .GET()
+		                .build();
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		        ObjectMapper objectMapper = new ObjectMapper();
+		        objectMapper.registerModule(new JavaTimeModule());
+		        List<FCTRegister> fctRegisters = objectMapper.readValue(response.body(), new TypeReference<List<FCTRegister>>() {});
 				List<Record> records = new ArrayList<>();
 				for (FCTRegister fctRegister : fctRegisters) {
 					Record record = new Record();
@@ -170,4 +199,5 @@ public class RecordsController extends AppController{
     	};
     	new Thread(task).start();
     }
+    
 }

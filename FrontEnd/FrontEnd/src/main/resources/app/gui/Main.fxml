@@ -21,15 +21,15 @@
                         <Insets />
                      </opaqueInsets>
                   </Label>
-                  <Button fx:id="btnAboutYou" mnemonicParsing="false" onAction="#cambiarVentana" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Sobre tí" />
-                  <Button fx:id="btnRecords" mnemonicParsing="false" onAction="#cambiarVentana" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Registros" />
-                  <Button fx:id="btnChangePass" mnemonicParsing="false" onAction="#cambiarVentana" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Cambiar contraseña" />
+                  <Button fx:id="btnAboutYou" mnemonicParsing="false" onAction="#toAboutYou" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Sobre tí" />
+                  <Button fx:id="btnRecords" mnemonicParsing="false" onAction="#toRecords" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Registros" />
+                  <Button fx:id="btnChangePass" mnemonicParsing="false" onAction="#ToChangePass" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="Cambiar contraseña" />
                </children>
             </VBox>
             <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#cambiarVentana" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="CERRAR SESIÓN" />
-                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#Exit" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@../css/Main.css" text="SALIR" />
+                  <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#toLogin" prefHeight="37.0" prefWidth="200.0" stylesheets="@../css/Main.css" text="CERRAR SESIÓN" />
+                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#exit" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold;" stylesheets="@../css/Main.css" text="SALIR" />
                </children>
             </VBox>
          </children>

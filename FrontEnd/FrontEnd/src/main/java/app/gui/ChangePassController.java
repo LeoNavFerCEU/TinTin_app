@@ -1,8 +1,13 @@
 package app.gui;
 
-import org.openapitools.client.api.UserApiServiceApi;
-import org.openapitools.client.model.ChangePasswordRequest;
-import org.openapitools.client.model.User;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -12,6 +17,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.BorderPane;
+import tintin.api.user.request.ChangePasswordRequest;
+import tintin.model.User;
 
 public class ChangePassController extends AppController{
 
@@ -30,8 +37,6 @@ public class ChangePassController extends AppController{
     @FXML
     private PasswordField pfOldPass;
     
-    private UserApiServiceApi userApi;
-    
     private User user;
     
     private Alert errorAlert;
@@ -40,7 +45,6 @@ public class ChangePassController extends AppController{
     
     @FXML
     void initialize() {
-    	userApi = new UserApiServiceApi();
     	user = (User) getParam("USER");
     	errorAlert = (Alert) getParam("ERROR_ALERT");
     	infoAlert = new Alert(AlertType.INFORMATION);
@@ -59,14 +63,25 @@ public class ChangePassController extends AppController{
     void changePass(ActionEvent event) {
     	ChangePasswordRequest cpRequest = new ChangePasswordRequest();
     	cpRequest.setId(user.getId());
-    	cpRequest.setCurrentPassword(pfOldPass.getText());
-    	cpRequest.setNewPassword(pfNewPass.getText());
+    	cpRequest.setCurrentPassword( DigestUtils.sha256Hex(pfOldPass.getText()));
+    	cpRequest.setNewPassword(DigestUtils.sha256Hex(pfNewPass.getText()));
     	Task<Void> taskStudent = new Task<Void>() {
 
 			@Override
 			protected Void call() throws Exception {
-				userApi.changePassword(cpRequest);
-				return null;
+				ObjectMapper mapper = new ObjectMapper();
+				String url = "http://localhost:8080/user";
+				String requestBody = mapper.writeValueAsString(cpRequest);
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Content-Type", "application/json")
+		                .header("Accept", "application/json")
+		                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+		                .build();
+		        client.send(request, HttpResponse.BodyHandlers.ofString());;
+		        return null;
 			}
 			
 			@Override
@@ -85,7 +100,6 @@ public class ChangePassController extends AppController{
     		
     	};
     	new Thread(taskStudent).start();
-    	
     }
 
 }

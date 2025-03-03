@@ -8,7 +8,8 @@ public class StudentDto {
 	private String course;
 	private String internshipPeriod;
 	private String courseYear;
-	private String tutorName;
+	private String SchoolTutorName;
+	private String companyTutorName;
 	private String companyName;
 	private Integer hoursTotal;
 	private String hoursWorked;

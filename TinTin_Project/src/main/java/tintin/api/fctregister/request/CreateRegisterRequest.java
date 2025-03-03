@@ -16,11 +16,10 @@ public class CreateRegisterRequest {
 	private Student associatedStudent;
 	@Valid
 	private Dates associatedDate;
-	//CAMBIAR A DOUBLE, LAS HORAS PUEDEN TENER DECIMALES. EJ: 6.5
 	@NotNull(message = "An hour is required to make a register")
 	@Min(value = 0L,message = "The minimun number of hours is 0.5")
 	@Max(value = 8L,message = "The maximun number of hours is 8")
-	private Integer numHours;
+	private Double numHours;
 	@NotBlank(message = "A description is required to make a register")
 	private String description;
 

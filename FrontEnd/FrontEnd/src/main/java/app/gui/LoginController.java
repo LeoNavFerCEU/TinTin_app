@@ -1,9 +1,15 @@
 package app.gui;
 
-import org.openapitools.client.ApiException;
-import org.openapitools.client.api.UserApiServiceApi;
-import org.openapitools.client.model.User;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import tintin.model.User;
 
 public class LoginController extends AppController{
 
@@ -26,15 +33,10 @@ public class LoginController extends AppController{
     @FXML
     private TextField tfUser;
     
-    private UserApiServiceApi userApi;
-    
     private Alert alert;
     
     @FXML
     void initialize() {
-    	userApi = new UserApiServiceApi();
-    	addParam("USER_API", userApi);
-    	
     	alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText(null);
     	alert.setTitle("Error");
@@ -44,15 +46,41 @@ public class LoginController extends AppController{
 
     @FXML
     void LogIn(ActionEvent event) {
-    	try {
-			User user = userApi.login(tfUser.getText(), pfPass.getText());
-			addParam("USER", user);
-			addParam("STUDENT", user.getLinkedProfile());
-			changeScene(FXML_MAIN);
-		} catch (ApiException e) {
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-		}
+    	String name = tfUser.getText();
+    	String pass = DigestUtils.sha256Hex(pfPass.getText());
+		Task<User> taskUser = new Task<User>() {
+
+			@Override
+			protected User call() throws Exception {
+				String url = "http://localhost:8080/user?username=" + name + "&password=" + pass;
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Accept", "application/json")
+		                .GET()
+		                .build();
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());;
+                ObjectMapper objectMapper = new ObjectMapper();
+                User user = objectMapper.readValue(response.body(), User.class);
+				return user;
+			}
+			
+			@Override
+			protected void succeeded() {
+				addParam("USER", getValue());
+				addParam("STUDENT", getValue().getLinkedProfile());
+				changeScene(FXML_MAIN);
+			}
+			
+			@Override
+			protected void failed() {
+				alert.setContentText(getException().getMessage());
+				alert.showAndWait();
+			}
+			
+		};
+		new Thread(taskUser).start();
     }
     
     @FXML

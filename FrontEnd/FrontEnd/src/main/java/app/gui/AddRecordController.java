@@ -1,15 +1,16 @@
 package app.gui;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.openapitools.client.api.FctRegisterApiServiceApi;
-import org.openapitools.client.model.CreateRegisterRequest;
-import org.openapitools.client.model.Dates;
-import org.openapitools.client.model.FCTRegister;
-import org.openapitools.client.model.Student;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -23,6 +24,10 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import tintin.api.fctregister.request.CreateRegisterRequest;
+import tintin.model.Dates;
+import tintin.model.FCTRegister;
+import tintin.model.Student;
 
 public class AddRecordController extends AppController{
 
@@ -40,8 +45,6 @@ public class AddRecordController extends AppController{
 
     @FXML
     private TextArea taDetail;
-    
-    private FctRegisterApiServiceApi fctApi;
 
     private Alert errorAlert;
     
@@ -63,8 +66,6 @@ public class AddRecordController extends AppController{
         List<String> formattedDates = new ArrayList<>();
         dates.forEach( date -> formattedDates.add(date.getDate().format(formatter)));
         cbDates.setItems(FXCollections.observableArrayList(formattedDates));
-        
-        fctApi = new FctRegisterApiServiceApi();
         
         errorAlert = (Alert) getParam("ERROR_ALERT");
     	infoAlert = new Alert(AlertType.INFORMATION);
@@ -96,7 +97,21 @@ public class AddRecordController extends AppController{
 
 			@Override
 			protected FCTRegister call() throws Exception {
-				return fctApi.createRegister(crRequest);
+				ObjectMapper mapper = new ObjectMapper();
+				mapper.registerModule(new JavaTimeModule());
+				String url = "http://localhost:8080/register";
+				String requestBody = mapper.writeValueAsString(crRequest);
+				HttpClient client = HttpClient.newHttpClient();
+		        HttpRequest request = HttpRequest.newBuilder()
+		                .uri(URI.create(url))
+		                .header("API-KEY", "fctapikey")
+		                .header("Content-Type", "application/json")
+		                .header("Accept", "application/json")
+		                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+		                .build();
+		        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());;
+                FCTRegister register = mapper.readValue(response.body(), FCTRegister.class);
+				return register;
 			}
 			
 			@Override
