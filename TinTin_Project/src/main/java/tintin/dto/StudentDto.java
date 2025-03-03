@@ -12,5 +12,5 @@ public class StudentDto {
 	private String companyName;
 	private Integer hoursTotal;
 	private String hoursWorked;
-	private Integer hoursLeft;
+	private Double hoursLeft;
 }

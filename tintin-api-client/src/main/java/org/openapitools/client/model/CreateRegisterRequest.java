@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * CreateRegisterRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-03T11:04:11.316594500+01:00[Europe/Madrid]", comments = "Generator version: 7.12.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-03T11:33:25.839629300+01:00[Europe/Madrid]", comments = "Generator version: 7.12.0")
 public class CreateRegisterRequest {
   public static final String SERIALIZED_NAME_ASSOCIATED_STUDENT = "associatedStudent";
   @SerializedName(SERIALIZED_NAME_ASSOCIATED_STUDENT)
@@ -65,7 +65,7 @@ public class CreateRegisterRequest {
   public static final String SERIALIZED_NAME_NUM_HOURS = "numHours";
   @SerializedName(SERIALIZED_NAME_NUM_HOURS)
   @javax.annotation.Nonnull
-  private Integer numHours;
+  private Double numHours;
 
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -113,7 +113,7 @@ public class CreateRegisterRequest {
   }
 
 
-  public CreateRegisterRequest numHours(@javax.annotation.Nonnull Integer numHours) {
+  public CreateRegisterRequest numHours(@javax.annotation.Nonnull Double numHours) {
     this.numHours = numHours;
     return this;
   }
@@ -125,11 +125,11 @@ public class CreateRegisterRequest {
    * @return numHours
    */
   @javax.annotation.Nonnull
-  public Integer getNumHours() {
+  public Double getNumHours() {
     return numHours;
   }
 
-  public void setNumHours(@javax.annotation.Nonnull Integer numHours) {
+  public void setNumHours(@javax.annotation.Nonnull Double numHours) {
     this.numHours = numHours;
   }
 

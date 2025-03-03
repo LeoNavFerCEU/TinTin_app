@@ -41,11 +41,11 @@ public class StudentServiceImpl implements StudentService{
 			throw new StudentNotFoundException("The student doesn't exist.");
 		}
 		List<FCTRegister> registers = registerRepo.findAllByAssociatedStudent_Id(idStudent);
-		Integer hoursWorked = 0;
+		Double hoursWorked = 0.0;
 		for (FCTRegister fctRegister : registers) {
 			hoursWorked += fctRegister.getNumHours();
 		}
-		Integer hoursLeft = 370-hoursWorked;
+		Double hoursLeft = 370-hoursWorked;
 		Float percentage = (float) ((hoursWorked*100)/370);
 		DecimalFormat df = new DecimalFormat("#");
 		StudentDto student = new StudentDto();

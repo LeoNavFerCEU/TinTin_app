@@ -73,7 +73,7 @@ public class FCTRegisterServiceImpl implements FCTRegisterService {
 					if (register == null) {
 						register = new FCTRegister();
 						register.setAssociatedDate(date);
-						register.setNumHours(0);
+						register.setNumHours(0.0);
 						register.setDescription("");
 					}
 					registers.add(register);

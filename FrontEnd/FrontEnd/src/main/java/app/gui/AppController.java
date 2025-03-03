@@ -22,6 +22,7 @@ public class AppController {
 	public static String FXML_RECORDS = PATH_BASE + "Records.fxml";
 	public static String FXML_ADDRECORD = PATH_BASE + "AddRecord.fxml";
 	public static String FXML_CHANGEPASS = PATH_BASE + "ChangePass.fxml";
+	public static String FXML_RECORD = PATH_BASE + "Record.fxml";
 	
 	private static Stage primaryStage;
 	
@@ -60,6 +61,7 @@ public class AppController {
 	}
 	
 	public void addParam(String key, Object param) {
+		@SuppressWarnings("unchecked")
 		Map<String, Object> mapa = (Map<String, Object>) primaryStage.getUserData();
 		if (mapa == null) {
 			mapa = new HashMap<String, Object>();
@@ -69,6 +71,7 @@ public class AppController {
 	}
 	
 	public Object getParam(String key) {
+		@SuppressWarnings("unchecked")
 		Map<String, Object> mapa = (Map<String, Object>) primaryStage.getUserData();
 		return mapa.get(key);
 	}

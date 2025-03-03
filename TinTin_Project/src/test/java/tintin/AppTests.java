@@ -98,7 +98,7 @@ class AppTests {
 		date.setCourseYear("2024/2025");
 
 		register.setAssociatedDate(date);
-		register.setNumHours(5);
+		register.setNumHours(5.0);
 		register.setAssociatedStudent(student);
 		register.setDescription("");
 

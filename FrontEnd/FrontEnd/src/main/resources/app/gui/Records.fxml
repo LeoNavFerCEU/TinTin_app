@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="recordsTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1030.0" style="-fx-background-color: rgb(20,20,20);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.RecordsController">
    <children>
       <Label id="title" layoutX="21.0" layoutY="14.0" stylesheets="@../css/Records.css" text="REGISTROS" />
       <Button fx:id="btnNewRecord" layoutX="880.0" layoutY="26.0" mnemonicParsing="false" onAction="#changeToAddRecords" style="-fx-background-color: RED; -fx-text-fill: WHITE; -fx-font-weight: BOLD; -fx-background-radius: 50;" stylesheets="@../css/Records.css" text="NUEVO REGISTRO" />
-      <TableView id="recordsTable" fx:id="table" layoutX="21.0" layoutY="86.0" prefHeight="615.0" prefWidth="580.0" style="-fx-background-color: rgb(50,50,50);" stylesheets="@../css/Records.css">
+      <TableView id="recordsTable" fx:id="tableRegisters" layoutX="21.0" layoutY="86.0" prefHeight="615.0" prefWidth="580.0" style="-fx-background-color: rgb(50,50,50);" stylesheets="@../css/Records.css">
         <columns>
-          <TableColumn prefWidth="100.0" resizable="false" text="FECHA" />
-          <TableColumn prefWidth="100.0" resizable="false" text="HORAS" />
-            <TableColumn prefWidth="380.0" resizable="false" text="DETALLES" />
+          <TableColumn fx:id="columnDate" prefWidth="100.0" resizable="false" text="FECHA" />
+          <TableColumn fx:id="columnHours" prefWidth="100.0" resizable="false" text="HORAS" />
+            <TableColumn fx:id="columnDetails" prefWidth="380.0" resizable="false" text="DETALLES" />
         </columns>
       </TableView>
       <Label layoutX="621.0" layoutY="86.0" prefHeight="32.0" prefWidth="90.0" stylesheets="@../css/Records.css" text="FILTRAR" />
       <Label layoutX="619.0" layoutY="158.0" style="-fx-font-weight: none;" stylesheets="@../css/Records.css" text="Desde" />
       <Label layoutX="622.0" layoutY="220.0" style="-fx-font-weight: none;" stylesheets="@../css/Records.css" text="Hasta" />
-      <DatePicker layoutX="710.0" layoutY="159.0" stylesheets="@../css/Records.css" />
-      <DatePicker layoutX="710.0" layoutY="221.0" stylesheets="@../css/Records.css" />
-      <RadioButton fx:id="rbCompletas" layoutX="619.0" layoutY="307.0" mnemonicParsing="false" stylesheets="@../css/Records.css" text="Fechas Completas">
-         <toggleGroup>
-            <ToggleGroup fx:id="radioButtonsFIltro" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="rbSinCompletar" layoutX="761.0" layoutY="307.0" mnemonicParsing="false" stylesheets="@../css/Records.css" text="Fechas Sin Completar" toggleGroup="$radioButtonsFIltro" />
-      <RadioButton fx:id="rbTodas" layoutX="925.0" layoutY="307.0" mnemonicParsing="false" stylesheets="@../css/Records.css" text="Todas" toggleGroup="$radioButtonsFIltro" />
-      <Button fx:id="btnBuscar" layoutX="711.0" layoutY="348.0" mnemonicParsing="false" onAction="#consultarRegistros" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: RED; -fx-text-fill: WHITE; -fx-font-weight: BOLD; -fx-background-radius: 50;" stylesheets="@../css/Records.css" text="BUSCAR" />
+      <Button fx:id="btnBuscar" layoutX="713.0" layoutY="369.0" mnemonicParsing="false" onAction="#consultarRegistros" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: RED; -fx-text-fill: WHITE; -fx-font-weight: BOLD; -fx-background-radius: 50;" stylesheets="@../css/Records.css" text="BUSCAR" />
+      <ComboBox fx:id="cbTo" layoutX="720.0" layoutY="224.0" prefHeight="25.0" prefWidth="185.0" />
+      <ComboBox fx:id="cbFrom" layoutX="720.0" layoutY="162.0" prefHeight="25.0" prefWidth="185.0" />
+      <ComboBox fx:id="cbSearch" layoutX="720.0" layoutY="296.0" prefHeight="25.0" prefWidth="185.0" />
    </children>
 </AnchorPane>

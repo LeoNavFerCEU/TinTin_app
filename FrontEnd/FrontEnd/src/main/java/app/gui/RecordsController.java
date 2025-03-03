@@ -1,11 +1,27 @@
 package app.gui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openapitools.client.api.FctRegisterApiServiceApi;
+import org.openapitools.client.model.Dates;
+import org.openapitools.client.model.FCTRegister;
+import org.openapitools.client.model.Student;
+
+import app.model.Record;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
 public class RecordsController extends AppController{
@@ -17,19 +33,99 @@ public class RecordsController extends AppController{
     private Button btnBuscar;
 
     @FXML
-    private RadioButton rbCompletas;
+    private ComboBox<String> cbFrom;
 
     @FXML
-    private RadioButton rbSinCompletar;
+    private ComboBox<String> cbSearch;
 
     @FXML
-    private RadioButton rbTodas;
-
-    @FXML
-    private ToggleGroup radioButtonsFIltro;
+    private ComboBox<String> cbTo;
     
     @FXML
-    private TableView<?> table;
+    private TableView<Record> table;
+    
+    @FXML
+    private TableColumn<Record, String> columnDate;
+
+    @FXML
+    private TableColumn<Record, String> columnDetails;
+
+    @FXML
+    private TableColumn<Record, Double> columnHours;
+    
+    private ObservableList<Record> data;
+    
+    private FctRegisterApiServiceApi fctApi;
+    
+    private Alert errorAlert;
+    
+    private Student student;
+    
+    @FXML
+    void initialize() {
+    	cbSearch.getItems().add("TODAS");
+    	cbSearch.getItems().add("INCOMPLETAS");
+    	cbSearch.getItems().add("COMPLETAS");
+    	
+    	errorAlert = (Alert) getParam("ALERTA_ERROR");
+    	
+    	fctApi = new FctRegisterApiServiceApi();
+    	student = (Student) getParam("STUDENT");
+    	
+    	columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+    	columnDetails.setCellValueFactory(new PropertyValueFactory<>("details"));
+    	columnHours.setCellValueFactory(new PropertyValueFactory<>("hours"));
+    	
+    	data = FXCollections.observableArrayList();
+    	table.setItems(data);
+    	
+    	Task<List<Record>> task = new Task<List<Record>>() {
+
+			@Override
+			protected List<Record> call() throws Exception {
+				List<FCTRegister> fctRegisters = fctApi.getRegisterDates(student.getId(), "TODAS", null, null);
+				List<Record> records = new ArrayList<>();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				List<Dates> dates = new ArrayList<>();
+				for (FCTRegister fctRegister : fctRegisters) {
+					dates.add(fctRegister.getAssociatedDate());
+					Record record = new Record();
+					record.setHours(fctRegister.getNumHours());
+					record.setDetails(fctRegister.getDescription());		
+					record.setDate(fctRegister.getAssociatedDate().getDate().format(formatter));
+					record.setIdRegister(fctRegister.getId());
+					records.add(record);
+				}
+				addParam("DATES", dates);
+				return records;
+			}
+			
+			@Override
+			protected void succeeded() {
+				data.setAll(getValue());
+				ObservableList<String> dates = FXCollections.observableArrayList();
+				getValue().forEach(record -> dates.add(record.getDate()));;
+				cbFrom.setItems(dates);
+				cbTo.setItems(dates);
+			}
+    		
+			@Override
+			protected void failed() {
+				errorAlert.setContentText(getException().getMessage());
+				errorAlert.showAndWait();
+			}
+			
+    	};
+    	new Thread(task).start();
+    	
+    	table.setOnMouseClicked(event -> {
+    	    if (table.getSelectionModel().getSelectedItem() != null) {
+    	    	addParam("RECORD", table.getSelectionModel().getSelectedItem());
+    	    	BorderPane mainPane = (BorderPane) getParam("Pantalla Principal");
+    	    	mainPane.setCenter(loadScene(FXML_RECORD));
+    	    }
+    	});
+    }
 
     @FXML
     void changeToAddRecords(ActionEvent event) {
@@ -39,6 +135,39 @@ public class RecordsController extends AppController{
 
     @FXML
     void consultarRegistros(ActionEvent event) {
-    	
+    	Task<List<Record>> task = new Task<List<Record>>() {
+
+			@Override
+			protected List<Record> call() throws Exception {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				List<FCTRegister> fctRegisters = fctApi.getRegisterDates(student.getId(), 
+						cbSearch.getSelectionModel().getSelectedItem(), 
+						LocalDate.parse(cbFrom.getSelectionModel().getSelectedItem(), formatter),
+						LocalDate.parse(cbTo.getSelectionModel().getSelectedItem(), formatter));
+				List<Record> records = new ArrayList<>();
+				for (FCTRegister fctRegister : fctRegisters) {
+					Record record = new Record();
+					record.setHours(fctRegister.getNumHours());
+					record.setDetails(fctRegister.getDescription());		
+					record.setDate(fctRegister.getAssociatedDate().getDate().format(formatter));
+					record.setIdRegister(fctRegister.getId());
+					records.add(record);
+				}
+				return records;
+			}
+			
+			@Override
+			protected void succeeded() {
+				data.setAll(getValue());
+			}
+    		
+			@Override
+			protected void failed() {
+				errorAlert.setContentText(getException().getMessage());
+				errorAlert.showAndWait();
+			}
+			
+    	};
+    	new Thread(task).start();
     }
 }

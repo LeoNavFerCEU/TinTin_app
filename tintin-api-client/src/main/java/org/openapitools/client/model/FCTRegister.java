@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * FCTRegister
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-03T11:04:11.316594500+01:00[Europe/Madrid]", comments = "Generator version: 7.12.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-03T11:33:25.839629300+01:00[Europe/Madrid]", comments = "Generator version: 7.12.0")
 public class FCTRegister {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -70,7 +70,7 @@ public class FCTRegister {
   public static final String SERIALIZED_NAME_NUM_HOURS = "numHours";
   @SerializedName(SERIALIZED_NAME_NUM_HOURS)
   @javax.annotation.Nullable
-  private Integer numHours;
+  private Double numHours;
 
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
@@ -137,7 +137,7 @@ public class FCTRegister {
   }
 
 
-  public FCTRegister numHours(@javax.annotation.Nullable Integer numHours) {
+  public FCTRegister numHours(@javax.annotation.Nullable Double numHours) {
     this.numHours = numHours;
     return this;
   }
@@ -147,11 +147,11 @@ public class FCTRegister {
    * @return numHours
    */
   @javax.annotation.Nullable
-  public Integer getNumHours() {
+  public Double getNumHours() {
     return numHours;
   }
 
-  public void setNumHours(@javax.annotation.Nullable Integer numHours) {
+  public void setNumHours(@javax.annotation.Nullable Double numHours) {
     this.numHours = numHours;
   }
 
