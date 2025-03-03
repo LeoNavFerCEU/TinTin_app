@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
+@SecurityRequirement(name = "Authorization")
 public class ApiKeyFilter extends OncePerRequestFilter{
 	
 	@Value("${api.key}")
@@ -28,7 +30,12 @@ public class ApiKeyFilter extends OncePerRequestFilter{
 			response.setStatus(HttpStatus.FORBIDDEN.value());
 			response.getWriter().write("FORBIDDEN TO DO ANY OPERATIONS");
 		}
-		
+	}
+	
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		String path = request.getRequestURI();
+		return (path.startsWith("/swagger") || path.startsWith("/docs"));
 	}
 
 }
